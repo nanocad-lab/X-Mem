@@ -29,29 +29,18 @@
 # We prefer to base X-Mem on Ubuntu distribution
 FROM ubuntu:14.04
 
-# We require a few Ubuntu packages to support running X-Mem binaries...
 # Update repository information
 RUN apt-get update
 
-# Install gcc/g++ 4.8.2, which has been tested for Ubuntu 14.04 LTS on several Intel x86 ISA and CPU variants.
-#RUN apt-get install g++-4.8.2
-
-# Install runtime library to support huge/large pages. Note that this requires a recent CPU with hardware support and Linux kernel 2.6.16 or later. Not an issue on most modern hardware.
+# Install runtime library to support huge/large pages.
 RUN apt-get install -y libhugetlbfs0
 
 # Install runtime library to support NUMA.
 RUN apt-get install -y libnuma1
 
-# Add X-Mem Linux binaries to /opt/ in the container
-RUN mkdir /opt/bin
-ADD bin/xmem-linux-* /opt/bin/
-
-# Set up large pages
-#ADD linux_setup_runtime_hugetlbfs.sh /opt/
-#RUN /opt/linux_setup_runtime_hugetlbfs.sh
-
-# Done!
-RUN echo "Done setting up X-Mem container!"
+# Add X-Mem Linux binaries to /xmem_v2.4.1/ in the container
+RUN mkdir /xmem_v2.4.1
+ADD releases/tarball/xmem_v2.4.1.tar.gz /xmem_v2.4.1
 
 # Entrypoint
-ENTRYPOINT ["/opt/bin/xmem-linux-x64_avx"]
+ENTRYPOINT ["/bin/bash"]
