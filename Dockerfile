@@ -29,6 +29,12 @@
 # We prefer to base X-Mem on Ubuntu distribution
 FROM ubuntu:14.04
 
+# Set maintainer
+MAINTAINER "Mark Gottscho, Email: mgottscho@ucla.edu"
+
+# IMPORTANT: set X-Mem version information
+ENV xmem_version 2.4.1
+
 # Update repository information
 RUN apt-get update
 
@@ -38,9 +44,21 @@ RUN apt-get install -y libhugetlbfs0
 # Install runtime library to support NUMA.
 RUN apt-get install -y libnuma1
 
-# Add X-Mem Linux binaries to /xmem_v2.4.1/ in the container
-RUN mkdir /xmem_v2.4.1
-ADD releases/tarball/xmem_v2.4.1.tar.gz /xmem_v2.4.1
+# Temporarily add X-Mem Linux binaries to /xmem_v2.4.1/ in the container
+#RUN mkdir /xmem_v${xmem_version}
+ADD releases/tarball/xmem_v${xmem_version}.tar.gz /
+
+# Set up only what is needed for x86-64 AVX at /xmem
+RUN mkdir /xmem
+RUN mv /xmem_v${xmem_version}/xmem-linux-x64_avx /xmem/xmem
+RUN mv /xmem_v${xmem_version}/ATTRIBUTION /xmem/
+RUN mv /xmem_v${xmem_version}/CHANGELOG /xmem/
+RUN mv /xmem_v${xmem_version}/LICENSE /xmem/
+RUN mv /xmem_v${xmem_version}/README.md /xmem/
+RUN rm -rf /xmem_v${xmem_version}
 
 # Entrypoint
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["/xmem/xmem"]
+
+# Set default argument to X-Mem
+CMD ["--help"]
