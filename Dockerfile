@@ -34,6 +34,8 @@ MAINTAINER "Mark Gottscho, Email: mgottscho@ucla.edu"
 
 # IMPORTANT: set X-Mem version information
 ENV xmem_version 2.4.1
+LABEL version=${xmem_version}
+LABEL description="X-Mem: The E>X<tensible >Mem<ory Characterization Tool"
 
 # Update repository information
 RUN apt-get update
