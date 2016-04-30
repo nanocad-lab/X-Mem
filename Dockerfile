@@ -32,11 +32,6 @@ FROM ubuntu:14.04
 # Set maintainer
 MAINTAINER "Mark Gottscho, Email: mgottscho@ucla.edu"
 
-# IMPORTANT: set X-Mem version information
-ENV xmem_version 2.4.1
-LABEL version=${xmem_version}
-LABEL description="X-Mem: The E>X<tensible >Mem<ory Characterization Tool"
-
 # Update repository information
 RUN apt-get update
 
@@ -45,6 +40,11 @@ RUN apt-get install -y libhugetlbfs0
 
 # Install runtime library to support NUMA.
 RUN apt-get install -y libnuma1
+
+# IMPORTANT: set X-Mem version information
+ENV xmem_version 2.4.1
+LABEL version=${xmem_version}
+LABEL description="X-Mem: The E>X<tensible >Mem<ory Characterization Tool"
 
 # Temporarily add X-Mem Linux binaries to /xmem_v2.4.1/ in the container
 #RUN mkdir /xmem_v${xmem_version}
