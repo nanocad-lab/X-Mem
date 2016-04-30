@@ -42,7 +42,7 @@ RUN apt-get install -y libhugetlbfs0
 RUN apt-get install -y libnuma1
 
 # IMPORTANT: set X-Mem version information
-ENV xmem_version 2.4.1
+ENV xmem_version 2.4.2
 LABEL version=${xmem_version}
 LABEL description="X-Mem: The E>X<tensible >Mem<ory Characterization Tool"
 
