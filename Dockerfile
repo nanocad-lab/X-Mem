@@ -46,17 +46,22 @@ ENV xmem_version 2.4.2
 LABEL version=${xmem_version}
 LABEL description="X-Mem: The E>X<tensible >Mem<ory Characterization Tool"
 
-# Temporarily add X-Mem Linux binaries to /xmem_v2.4.1/ in the container
-#RUN mkdir /xmem_v${xmem_version}
+# Temporarily add X-Mem Linux binaries to in the container
 ADD releases/tarball/xmem_v${xmem_version}.tar.gz /
 
 # Set up only what is needed for x86-64 AVX at /xmem
 RUN mkdir /xmem
 RUN mv /xmem_v${xmem_version}/xmem-linux-x64_avx /xmem/xmem
+RUN mv /xmem_v${xmem_version}/xmem-linux-x64 /xmem/xmem_no_avx
+RUN mv /xmem_v${xmem_version}/AUTHORS /xmem/
 RUN mv /xmem_v${xmem_version}/ATTRIBUTION /xmem/
 RUN mv /xmem_v${xmem_version}/CHANGELOG /xmem/
 RUN mv /xmem_v${xmem_version}/LICENSE /xmem/
 RUN mv /xmem_v${xmem_version}/README.md /xmem/
+RUN mv /xmem_v${xmem_version}/VERSION /xmem/
+RUN mv /xmem_v${xmem_version}/scripts_postprocessing /xmem/
+RUN mv /xmem_v${xmem_version}/scripts_runtime /xmem/
+RUN mv /xmem_v${xmem_version}/X-Mem_Developer_Manual.pdf /xmem/
 RUN rm -rf /xmem_v${xmem_version}
 
 # Entrypoint
